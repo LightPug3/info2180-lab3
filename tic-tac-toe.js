@@ -1,25 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Get the board element
-    const board = document.getElementById("board");
-  
-    // Apply the grid styling to the board
-    board.style.display = "grid";
-    board.style.gridTemplateColumns = "repeat(3, 150px)";
-    board.style.gridTemplateRows = "repeat(3, 150px)";
-    board.style.gap = "20px";
-  
-    // Set each child div in the board to be a blank square
-    const squares = board.querySelectorAll("div");
-    squares.forEach(square => {
-      square.style.width = "150px";
-      square.style.height = "150px";
-    //   square.style.border = "1px solid black";
-      square.style.display = "flex";
-      square.style.alignItems = "center";
-      square.style.justifyContent = "center";
-      square.style.fontSize = "36px"; // Optional, for future X or O
-      square.style.backgroundColor = "white"; // Set background to white
-      square.style.borderRadius = "10px"; // Round the corners slightly
-      square.style.boxShadow = "2px 2px 5px rgba(0, 0, 0, 0.2)"; // Add shadow
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+
+  // Initialize variables to track game state and turns and begin with X
+  let isXTurn = true;
+  const gameState = Array(9).fill(null);
+
+  for (let i = 0; i < 9; i++) {
+    const square = document.createElement("div");
+    square.classList.add("square");
+    square.style.cursor = "pointer";
+
+    square.addEventListener("click", function() {
+      if (!gameState[i]) {
+        const mark = isXTurn ? "X" : "O";
+        gameState[i] = mark;            // Update the game state
+        square.textContent = mark;      // Display X or O in the square
+        square.classList.add(mark);     // Add the respective class (X or O) for styling
+        isXTurn = !isXTurn;
+      }
     });
-  });
+
+    square.addEventListener("mouseenter", function() {
+      if (!gameState[i]) {
+        square.classList.add("hover");
+      }
+    });
+
+    square.addEventListener("mouseleave", function() {
+      square.classList.remove("hover");
+    });
+
+    board.appendChild(square);
+  }
+});
