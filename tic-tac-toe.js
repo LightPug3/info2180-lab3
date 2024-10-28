@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
   const board = document.getElementById("board");
   const status = document.getElementById("status");
+  const originalStatusMessage = status.textContent;
   const newGameButton = document.querySelector(".btn");
-
 
   // initialize variables to track game state and turns and begin with X's turn
   let isXTurn = true;
   const gameState = Array(9).fill(null);
   let gameActive = true;              // track if the game is still active
-
+  
   // winning combinations (rows, columns, diagonals)
   const winningCombinations = [
     [0, 1, 2], // top row
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
       square.classList.remove("X", "O", "hover");     // remove any classes
     });
 
-    status.textContent = "Move your mouse over a square and click to play an X or an O.";
+    status.textContent = originalStatusMessage;
     status.classList.remove("you-won");
   });
 });
